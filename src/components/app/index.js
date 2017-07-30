@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from './../home';
 import Game from './../game';
 
-class State {
+class GameManager {
     constructor() {
         this.games = {};
         this.lastId = 0;
@@ -20,17 +20,21 @@ class State {
         };
         return this.games[newGameId];
     }
+
+    get(id) {
+        return this.games[id];
+    }
 }
 
-const state = new State();
+const gameManager = new GameManager();
 const App = () => (
     <main>
         <Switch>
             <Route exact path='/' render={(props) => (
-                <Home {...props} games={state}/>
+                <Home {...props} games={gameManager}/>
             )}/>
             <Route path='/play/:gameId' render={(props) => (
-                <Game {...props} games={state}/>
+                <Game {...props} games={gameManager}/>
             )}/>
         </Switch>
     </main>
