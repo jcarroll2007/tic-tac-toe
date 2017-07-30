@@ -4,9 +4,13 @@ class Home extends React.PureComponent {
     constructor() {
         super();
         this.state = {
-            squares: Array(9).fill(null),
-            xIsNext: true
+            player1Name: '',
+            player2Name: '',
         };
+    }
+
+    handlePlayerNameChange(event, player) {
+        this.setState({ [player]: event.target.value });
     }
 
     handlePlay() {
@@ -14,6 +18,9 @@ class Home extends React.PureComponent {
         // TODO: It's probably not ideal that a component
         // at this level knows about routing?
         console.log(this.props);
+        console.log(this.state);
+        this.props.games.newGame(this.state.player1Name,
+            this.state.player2Name);
         // this.props.history.push('/play');
     }
 
@@ -26,8 +33,10 @@ class Home extends React.PureComponent {
                 <p>
                     Who will be playing?
                 </p>
-                <input placeholder="Player 1"/>
-                <input placeholder="Player 2"/>
+                <input placeholder="Player 1" value={this.state.player1Name}
+                    onChange={(e) => this.handlePlayerNameChange(e, 'player1Name')}/>
+                <input placeholder="Player 2" value={this.state.player2Name}
+                    onChange={(e) => this.handlePlayerNameChange(e, 'player2Name')}/>
                 <button onClick={() => this.handlePlay()}>
                     PLAY
                 </button>
