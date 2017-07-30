@@ -6,17 +6,19 @@ import Game from './../game';
 
 class State {
     constructor() {
-        this.games = [];
+        this.games = {};
+        this.lastId = 0;
     }
 
     newGame(player1, player2) {
-        const newGame = {
+        const newGameId = this.lastId += 1;
+        this.games[newGameId] = {
+            id: newGameId,
             player1,
             player2,
-            moves: []
-        }
-        this.games.push(newGame);
-        this.currentGame = newGame;
+            moves: [],
+        };
+        return this.games[newGameId];
     }
 }
 
@@ -24,10 +26,10 @@ const state = new State();
 const App = () => (
     <main>
         <Switch>
-            <Route path='/' render={(props) => (
+            <Route exact path='/' render={(props) => (
                 <Home {...props} games={state}/>
             )}/>
-            <Route path='/play' render={(props) => (
+            <Route path='/play/:gameId' render={(props) => (
                 <Game {...props} games={state}/>
             )}/>
         </Switch>

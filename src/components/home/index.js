@@ -17,11 +17,9 @@ class Home extends React.PureComponent {
 
         // TODO: It's probably not ideal that a component
         // at this level knows about routing?
-        console.log(this.props);
-        console.log(this.state);
-        this.props.games.newGame(this.state.player1Name,
-            this.state.player2Name);
-        // this.props.history.push('/play');
+        const newGame = this.props.games.newGame(
+            this.state.player1Name, this.state.player2Name);
+        this.props.history.push(`/play/${newGame.id}`);
     }
 
     render() {
